@@ -1,0 +1,10 @@
+- hosts: servidores
+  become: yes
+  roles: 
+  - instalando-netdata
+
+
+- hosts: monitor
+  become: yes
+  roles:  
+  - configurando-monitor

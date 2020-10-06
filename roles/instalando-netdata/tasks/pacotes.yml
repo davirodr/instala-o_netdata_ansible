@@ -1,0 +1,44 @@
+---
+- name: Gather variables for each operating system
+  include_vars: "{{ item }}"
+  with_items: "{{ ansible_os_family | lower }}.yml"
+  tags:
+    - always
+
+- name: update the apt cache
+  apt:
+    update_cache: true
+    cache_valid_time: 86400
+  when: ansible_os_family == "Debian"
+
+- name: "EPEL repo"
+  package:
+    name: epel-release
+    state: present
+  when:
+    - ansible_os_family == "RedHat"
+    - ansible_distribution != "Fedora"  
+
+- name: install packages
+  package:
+    name: 
+     - vim
+     - net-tools
+     - wget
+    state: present
+
+- include: install_script.yml
+
+- name: Removendo netdata.conf
+  file:
+    path: /etc/netdata/netdata.conf
+    state: absent
+
+- name: Copiando novo arquivo netdata.conf
+  copy:
+    src: 'netdataconf/netdata.conf'
+    dest: '/etc/netdata/netdata.conf'   
+    mode: '0644'
+    force: yes
+  notify: restart netdata
+      

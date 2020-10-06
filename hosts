@@ -1,0 +1,15 @@
+[web]
+Servidor-A  ansible_host=25.25.25.20 ansible_user=ubuntu
+[web2]
+Servidor-B  ansible_host=25.25.25.21 ansible_user=ubuntu
+Servidor-C  ansible_host=25.25.25.22 ansible_user=ubuntu
+
+
+[monitor]
+Monitor-Dockers  ansible_host=25.25.25.19 ansible_user=ubuntu
+ 
+[servidores:children]
+web
+web2
+
+

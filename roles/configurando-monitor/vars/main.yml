@@ -1,0 +1,4 @@
+---
+# vars file for configurando-monitor
+
+netdata_path: /usr/src/netdata

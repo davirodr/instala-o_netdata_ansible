@@ -1,0 +1,14 @@
+- name: Copiando Arquivo Netdata para o servidor Monitor
+  copy:
+    src: 'netdatamonitor/netdata.conf'
+    dest: '/etc/netdata/netdata.conf'   
+    mode: '0644'
+    force: yes
+  notify: restart netdata
+  
+- name: Removendo script
+  file:
+    path: '{{netdata_path}}'
+    state: absent
+  
+          

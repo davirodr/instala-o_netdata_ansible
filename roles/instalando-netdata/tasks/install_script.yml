@@ -1,0 +1,17 @@
+- name: Criando pasta netdata
+  file:
+    path: '{{netdata_path}}'
+    state: directory
+    mode: '0755'
+
+
+- name: Wget script
+  shell:
+    cmd: wget https://my-netdata.io/kickstart.sh && chmod +x /usr/src/netdata/kickstart.sh
+    chdir: '{{netdata_path}}'
+
+- name: execute installation script
+  command: bash kickstart.sh --dont-wait
+  args:
+    chdir: '{{netdata_path}}'
+  notify: restart netdata
